@@ -11,9 +11,10 @@ def on_event(partition_context, event):
     #print(f"Data: {event.body_as_str()}")
     try:
         data = json.loads(event.body_as_str())
-        event_list.append(data)  # Store in global list
 
-        print(f"Received event ID: {data.get('id')}")
+        if data not in event_list:  # To avoid duplicates
+            event_list.append(data)  # Store in global list
+            print(f"Received event ID: {data.get('id')}")
     except json.JSONDecodeError as e:
         print("Invalid JSON:", e)
     
@@ -38,9 +39,7 @@ def fill_dataframe():
         print("Stopped receiving Events.")
 
         # Check global list of events
-        df = pd.DataFrame(event_list)
-        
-        df["id"].drop_duplicates(inplace=True)  # Clean duplicate events
+        df = pd.DataFrame(event_list)        
 
         print("\n--- Collected DataFrame ---")
         print("Collected " + str(len(df)) + " events.")
