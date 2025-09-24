@@ -1,7 +1,7 @@
 from azure.eventhub import EventHubConsumerClient
 import json
 import pandas as pd
-from config import EVENTHUB_CONNECTION_STR, EVENTHUB_NAME
+from config import EVENTHUB_CONNECTION_STR
 
 # Global 'list' to store all events
 event_list = []
@@ -23,7 +23,6 @@ def on_event(partition_context, event):
 def fill_dataframe():
     client = EventHubConsumerClient.from_connection_string(
         conn_str = EVENTHUB_CONNECTION_STR,
-        eventhub_name = EVENTHUB_NAME,
         consumer_group = "$Default"
     )
 
