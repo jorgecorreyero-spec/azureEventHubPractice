@@ -65,5 +65,8 @@ if __name__ == "__main__":
                 
         except Exception as ex:
             print(f"Error in processing loop: {ex}")
-
-        time.sleep(FETCH_INTERVAL)
+        try:
+            time.sleep(FETCH_INTERVAL)
+        except KeyboardInterrupt as ki:
+            print("Program exited succesfully")
+            break
