@@ -2,7 +2,7 @@ import requests
 import json
 import time
 from azure.eventhub import EventData, EventHubProducerClient
-from config import EVENTHUB_CONNECTION_STR, EVENTHUB_NAME, API_URL, FETCH_INTERVAL
+from config import EVENTHUB_CONNECTION_STR, API_URL, FETCH_INTERVAL
 
 # Track already sent event IDs with a 'set' to avoid duplicates
 sent_event_ids = set()
@@ -20,8 +20,7 @@ def fetch_earthquake_data():
 # -----------------------------------
 def send_new_events_to_eventhub(new_features):
     producer = EventHubProducerClient.from_connection_string(
-        conn_str = EVENTHUB_CONNECTION_STR,
-        eventhub_name = EVENTHUB_NAME
+        conn_str = EVENTHUB_CONNECTION_STR
     )
 
     try:
